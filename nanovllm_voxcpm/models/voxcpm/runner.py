@@ -158,10 +158,8 @@ class VoxCPMRunner(BaseModelRunner):
         torch.cuda.empty_cache()
         torch.cuda.reset_peak_memory_stats()
         max_num_batched_tokens, max_model_len = self._config.max_num_batched_tokens, self._config.max_model_len
-        num_seqs = min(max_num_batched_tokens // max_model_len, self._config.max_num_seqs)
         seqs = [
             RunnerTask(block_table=[], seq_length=max_model_len, num_cached_tokens=0, block_size=self.block_size, custom_payload=None)
-            for _ in range(num_seqs)
         ]
         inputs = {
             "positions": self.prepare_prefill_context(seqs)
