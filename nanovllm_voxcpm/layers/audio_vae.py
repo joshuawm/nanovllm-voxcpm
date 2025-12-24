@@ -326,6 +326,13 @@ class AudioVAE(nn.Module):
         return audio_data
 
     @torch.inference_mode()
+    def warm_up(self):
+        dummy_input = torch.rand((1,64,6))
+        param = next(self.decoder.parameters())
+        dummy_input =  dummy_input.to(device=param.device,dtype=param.dtype)
+        self.decode(dummy_input)
+
+    @torch.inference_mode()
     def decode(self, z: torch.Tensor):
         """Decode given latent codes and return audio data
 
