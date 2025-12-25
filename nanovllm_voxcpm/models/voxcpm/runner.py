@@ -187,4 +187,3 @@ class VoxCPMRunner(BaseModelRunner):
 
         vae_decoder_outputs = self.vae.decode(vae_decoder_inputs.permute(0, 2, 1))[:, 0, :].cpu().numpy()
         reset_context()
-        torch.cuda.empty_cache()
